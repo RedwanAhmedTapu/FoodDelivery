@@ -35,7 +35,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
         <Link href="/" className="flex items-center gap-2">
           <span className="font-display text-xl font-semibold tracking-tight text-paper">
-            Rickshaw<span className="text-mango">Bites</span>
+            Foodie<span className="text-mango">Bites</span>
           </span>
         </Link>
 
