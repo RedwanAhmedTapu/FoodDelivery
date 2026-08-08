@@ -1,0 +1,154 @@
+{
+  "info": {
+    "name": "Food Delivery Platform API",
+    "description": "Core flows for the multi-vendor food delivery backend. Set the {{baseUrl}} and {{accessToken}} collection variables after login.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api/v1" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/register/customer",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"01700000000\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"jane@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/refresh-token",
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stores",
+      "item": [
+        {
+          "name": "List Nearby Stores",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/nearby?lng=90.4125&lat=23.8103&radius=5"
+          }
+        },
+        {
+          "name": "Create Store",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/stores",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Burger House\",\n  \"phone\": \"01700000001\",\n  \"address\": \"123 Main St\",\n  \"coordinates\": [90.4125, 23.8103]\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Foods",
+      "item": [
+        {
+          "name": "Search Foods",
+          "request": { "method": "GET", "url": "{{baseUrl}}/foods?search=burger&sortBy=popularity" }
+        }
+      ]
+    },
+    {
+      "name": "Cart & Orders",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/cart/items",
+            "body": { "mode": "raw", "raw": "{\n  \"foodId\": \"<foodId>\",\n  \"quantity\": 2\n}" }
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": "{{baseUrl}}/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deliveryAddress\": \"456 Side St\",\n  \"deliveryCoordinates\": [90.41, 23.81],\n  \"paymentMethod\": \"COD\"\n}"
+            }
+          }
+        },
+        {
+          "name": "My Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/orders/mine"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommendations",
+      "item": [
+        {
+          "name": "Recommended Foods",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/recommendations/foods"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Dashboard Analytics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/admin/analytics"
+          }
+        }
+      ]
+    }
+  ]
+}
