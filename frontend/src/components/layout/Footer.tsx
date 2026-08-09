@@ -1,3 +1,5 @@
+import Link from "next/dist/client/link";
+
 export function Footer() {
   return (
     <footer className="mt-24 border-t border-border bg-zinc-950/60 backdrop-blur-sm">
@@ -20,10 +22,10 @@ export function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-2.5 text-sm text-faint">
-              <li><a href="#" className="transition-colors hover:text-mango">Home</a></li>
-              <li><a href="#" className="transition-colors hover:text-mango">Menu</a></li>
-              <li><a href="#" className="transition-colors hover:text-mango">Track Order</a></li>
-              <li><a href="#" className="transition-colors hover:text-mango">About Us</a></li>
+              <li><Link href="/" className="transition-colors hover:text-mango">Home</Link></li>
+              <li><Link href="/menu" className="transition-colors hover:text-mango">Menu</Link></li>
+              <li><Link href="/orders" className="transition-colors hover:text-mango">Track Order</Link></li>
+              <li><Link href="/about" className="transition-colors hover:text-mango">About Us</Link></li>
             </ul>
           </div>
 
@@ -48,7 +50,7 @@ export function Footer() {
                 <svg className="h-4 w-4 shrink-0 text-mango" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <a href="tel:+8801700000000" className="transition-colors hover:text-mango">+880 1700-000000</a>
+                <a href="tel:+8801995912718" className="transition-colors hover:text-mango">+880 1995-912718</a>
               </li>
 
               {/* Email */}
@@ -82,8 +84,8 @@ export function Footer() {
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 text-xs text-faint sm:flex-row">
           <p>© {new Date().getFullYear()} Foodie-Bite-Alpha. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-mango">Privacy Policy</a>
-            <a href="#" className="transition-colors hover:text-mango">Terms & Conditions</a>
+            <Link href="/privacy-policy" className="transition-colors hover:text-mango">Privacy Policy</Link>
+            <Link href="/terms-conditions" className="transition-colors hover:text-mango">Terms & Conditions</Link>
           </div>
         </div>
       </div>

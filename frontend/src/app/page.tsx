@@ -179,22 +179,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Category chips */}
-      {categories.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-8 md:px-6">
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {categories.map((cat) => (
-              <Link
-                key={cat._id}
-                href={`/stores?categoryId=${cat._id}`}
-                className="ticket-notch shrink-0 rounded-xl border border-border bg-card px-4 py-2.5 text-sm text-paper hover:border-mango"
-              >
-                {cat.name}
-              </Link>
-            ))}
+     {/* Category circles */}
+{categories.length > 0 && (
+  <section className="mx-auto max-w-6xl px-4 pt-10 pb-4 md:px-6">
+    <h2 className="mb-6 font-display text-xl text-paper">What's on your mind?</h2>
+    <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-none">
+      {categories.map((cat) => (
+        <Link
+          key={cat._id}
+          href={`/stores?categoryId=${cat._id}`}
+          className="group flex shrink-0 flex-col items-center gap-2"
+        >
+          <div className="relative h-[72px] w-[72px] rounded-full border-2 border-border bg-surface p-1 transition-all duration-200 group-hover:border-mango group-hover:shadow-[0_0_20px_rgba(255,159,28,0.15)] md:h-[84px] md:w-[84px]">
+            <div className="relative h-full w-full overflow-hidden rounded-full">
+              {cat.image?.url ? (
+                <Image
+                  src={cat.image.url}
+                  alt={cat.name}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  sizes="84px"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center bg-gradient-to-br from-mango/20 to-mango/5 font-display text-lg font-medium text-mango">
+                  {cat.name.slice(0, 2).toUpperCase()}
+                </div>
+              )}
+            </div>
           </div>
-        </section>
-      )}
+          <span className="max-w-[80px] text-center text-xs font-medium leading-tight text-paper transition-colors group-hover:text-mango md:max-w-[90px] md:text-[13px]">
+            {cat.name}
+          </span>
+        </Link>
+      ))}
+    </div>
+  </section>
+)}
 
       {/* Personalized: based on what this customer orders most / rates highly */}
       <FoodStrip title="Picked for you" icon={Sparkles} foods={recommendedFoods} />
