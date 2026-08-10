@@ -16,7 +16,7 @@ type RoleTab = 'CUSTOMER' | 'SHOP_OWNER' | 'DELIVERY_BOY';
 
 const tabs: { key: RoleTab; label: string; redirect: string }[] = [
   { key: 'CUSTOMER', label: 'Order food', redirect: '/' },
-  { key: 'SHOP_OWNER', label: 'Sell on RickshawBites', redirect: '/dashboard/shop-owner' },
+  { key: 'SHOP_OWNER', label: 'Sell on Foodie-Bite', redirect: '/dashboard/shop-owner' },
   { key: 'DELIVERY_BOY', label: 'Deliver & earn', redirect: '/dashboard/delivery' },
 ];
 

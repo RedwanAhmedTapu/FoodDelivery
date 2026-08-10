@@ -19,7 +19,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'RickshawBites — Food delivery, tracked door to door',
+  title: 'Foodie-Bite-Alpha — Food delivery, tracked door to door',
   description: 'Order from the best local stores near you, with live delivery tracking.',
 };
 
