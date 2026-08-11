@@ -24,6 +24,7 @@ export interface Store {
   logo?: { url: string | null };
   coverImage?: { url: string | null };
   phone: string;
+  email: string;
   address: string;
   location: { type: 'Point'; coordinates: [number, number] };
   openingTime: string;
