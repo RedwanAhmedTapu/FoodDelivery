@@ -147,9 +147,61 @@ async function listActiveStores(query) {
 async function listAllForAdmin(query) {
   const pagination = getPagination(query);
   const filter = {};
+
   if (query.approvalStatus) filter.approvalStatus = query.approvalStatus;
   if (query.isActive !== undefined) filter.isActive = query.isActive === 'true';
-  return paginate(Store, filter, pagination, { sort: { createdAt: -1 } });
+
+  // Aggregation pipeline
+  const pipeline = [
+    { $match: filter },
+    // ShopOwnerProfile theke ownerName ber korar jonno lookup
+    {
+      $lookup: {
+        from: 'shopownerprofiles', // DB te collection name ta ki hobe seta dekhen (usually lowercase plural)
+        localField: 'ownerId',
+        foreignField: 'userId',
+        as: 'ownerDetails'
+      }
+    },
+    // Array theke object ba ber kora
+    {
+      $unwind: {
+        path: '$ownerDetails',
+        preserveNullAndEmptyArrays: true // Jodi kono store owner er profile na thake tahole o store ta dekhabe
+      }
+    },
+    // Response e easily pawar jonno alada field hishebe add kora holo
+    {
+      $addFields: {
+        ownerName: { $ifNull: ['$ownerDetails.ownerName', 'N/A'] }
+      }
+    },
+    { $sort: { createdAt: -1 } }
+  ];
+
+  // --- PAGINATION LOGIC ---
+  // Total count ber kora
+  const countPipeline = [{ $match: filter }, { $count: 'total' }];
+  const countResult = await Store.aggregate(countPipeline);
+  const total = countResult.length > 0 ? countResult[0].total : 0;
+
+  // Data with skip and limit
+  const dataPipeline = [
+    ...pipeline,
+    { $skip: (pagination.page - 1) * pagination.limit },
+    { $limit: pagination.limit }
+  ];
+
+  const items = await Store.aggregate(dataPipeline);
+
+  const meta = {
+    total,
+    page: pagination.page,
+    limit: pagination.limit,
+    totalPages: Math.ceil(total / pagination.limit)
+  };
+
+  return { items, meta };
 }
 
 async function findNearbyStores({ lng, lat, radius = 5, page, limit }) {
