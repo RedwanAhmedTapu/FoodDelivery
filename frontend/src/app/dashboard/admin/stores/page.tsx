@@ -107,6 +107,11 @@ export default function AdminStoresPage() {
 
           {/* ── Contact row ────────────────────────────────── */}
           <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted">
+            {/* ➡️ Owner Name Added Here */}
+            <span className="inline-flex items-center gap-1.5">
+              <IconUser />
+              {store.ownerName || 'N/A'}
+            </span>
             <span className="inline-flex items-center gap-1.5">
               <IconPhone />
               {store.phone}
@@ -164,6 +169,24 @@ function formatTime(t?: string | null) {
 }
 
 /* ─── Inline SVG icons (keep bundle tiny) ───────────────────── */
+
+// ➡️ IconUser Added Here
+function IconUser() {
+  return (
+    <svg
+      className="h-3.5 w-3.5 shrink-0"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
 
 function IconPhone() {
   return (

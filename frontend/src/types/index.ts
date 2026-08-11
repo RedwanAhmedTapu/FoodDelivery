@@ -25,6 +25,12 @@ export interface Store {
   coverImage?: { url: string | null };
   phone: string;
   email: string;
+  ownerName?: string; 
+  ownerDetails?: {
+    _id: string;
+    ownerName: string;
+    businessName: string;
+  };
   address: string;
   location: { type: 'Point'; coordinates: [number, number] };
   openingTime: string;
