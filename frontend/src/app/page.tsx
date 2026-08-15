@@ -844,10 +844,10 @@ export default function HomePage() {
                                         className="object-cover"
                                         sizes="56px"
                                       />
-                                    ) : store.cover?.url ? (
+                                    ) : store.coverImage?.url ? (
                                       <Image
                                         src={
-                                          store.cover
+                                          store.coverImage
                                             .url
                                         }
                                         alt={
