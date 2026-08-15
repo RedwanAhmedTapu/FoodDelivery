@@ -127,11 +127,7 @@ function CheckoutContent() {
 
         <Select label="Payment method" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
           <option value="COD">Cash on delivery</option>
-          <option value="CARD">Card</option>
-          <option value="BKASH">bKash</option>
-          <option value="NAGAD">Nagad</option>
-          <option value="SSLCOMMERZ">SSLCommerz</option>
-          <option value="STRIPE">Stripe</option>
+          <option value="SSLCOMMERZ">Pay Online</option>
         </Select>
 
         <Textarea

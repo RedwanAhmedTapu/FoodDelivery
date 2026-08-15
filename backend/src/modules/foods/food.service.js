@@ -126,21 +126,60 @@ function buildSortStage(sortBy) {
 
 async function searchFoods(query) {
   const pagination = getPagination(query);
-  const filter = { isActive: true, availability: true };
 
-  if (query.categoryId) filter.categoryId = query.categoryId;
-  if (query.storeId) filter.storeId = query.storeId;
-  if (query.search) filter.$text = { $search: query.search };
-  if (query.minPrice || query.maxPrice) {
-    filter.price = {};
-    if (query.minPrice) filter.price.$gte = query.minPrice;
-    if (query.maxPrice) filter.price.$lte = query.maxPrice;
+  const filter = {
+    isActive: true,
+    availability: true,
+  };
+
+  if (query.categoryId) {
+    filter.categoryId = query.categoryId;
   }
-  if (query.minRating) filter.rating = { $gte: query.minRating };
+
+  if (query.storeId) {
+    filter.storeId = query.storeId;
+  }
+
+  // Search by food name
+  if (query.search?.trim()) {
+    const search = query.search.trim();
+
+    filter.name = {
+      $regex: search,
+      $options: 'i',
+    };
+  }
+
+  if (query.minPrice != null || query.maxPrice != null) {
+    filter.price = {};
+
+    if (query.minPrice != null) {
+      filter.price.$gte = Number(query.minPrice);
+    }
+
+    if (query.maxPrice != null) {
+      filter.price.$lte = Number(query.maxPrice);
+    }
+  }
+
+  if (query.minRating != null) {
+    filter.rating = {
+      $gte: Number(query.minRating),
+    };
+  }
 
   return paginate(Food, filter, pagination, {
     sort: buildSortStage(query.sortBy),
-    populate: [{ path: 'categoryId', select: 'name slug' }, { path: 'storeId', select: 'name slug isActive' }],
+    populate: [
+      {
+        path: 'categoryId',
+        select: 'name slug',
+      },
+      {
+        path: 'storeId',
+        select: 'name slug isActive logo cover',
+      },
+    ],
   });
 }
 
